@@ -1,5 +1,5 @@
 const httpHelper = require('sharemyscreen-http-helper');
-const userModel = require('sharemyscreen-common').userModel;
+const common = require('sharemyscreen-common');
 
 function registerRoute (router) {
   router.get('/user/:id', getUserInfo);
@@ -13,7 +13,7 @@ function getUserInfo (req, res, next) {
   if (req.params.id === 'me') {
     httpHelper.sendReply(res, 200, req.user.safePrint(), next);
   } else {
-    userModel.getByPublicId(req.params.id, function (err, fUser) {
+    common.userModel.getByPublicId(req.params.id, function (err, fUser) {
       if (err) {
         next(err);
       } else if (fUser == null) {
@@ -44,18 +44,29 @@ function updateUser (req, res, next) {
 }
 
 function deleteUser (req, res, next) {
-  req.user.remove(function (err) {
+  common.accessTokenModel.deleteTokenForUser(req.user, function (err) {
     if (err) {
       next(err);
     } else {
-      // TODO delete user tokens
-      httpHelper.sendReply(res, 200, {}, next);
+      common.refreshTokenModel.deleteTokenForUser(req.user, function (err) {
+        if (err) {
+          next(err);
+        } else {
+          req.user.remove(function (err) {
+            if (err) {
+              next(err);
+            } else {
+              httpHelper.sendReply(res, 200, {}, next);
+            }
+          });
+        }
+      });
     }
   });
 }
 
 function searchUser (req, res, next) {
-  userModel.getByPartialEmail(req.params.email, 10, function (err, fUsers) {
+  common.userModel.getByPartialEmail(req.params.email, 10, function (err, fUsers) {
     if (err) {
       next(err);
     } else {
