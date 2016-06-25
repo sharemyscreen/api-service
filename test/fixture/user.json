@@ -1,18 +1,18 @@
 {
   "user1": {
-    "email": "user1@test.com",
+    "email": "zuser1@test.com",
     "password": "password",
     "first_name": "Maxime",
     "last_name": "Guedj"
   },
   "user1n": {
-    "email": "uuser1@test.com",
+    "email": "zuuser1@test.com",
     "password": "password",
     "first_name": "uMaxime",
     "last_name": "uGuedj"
   },
   "user2": {
-    "email": "user2@test.com",
+    "email": "zuser2@test.com",
     "facebookId": "password",
     "first_name": "Maxime",
     "last_name": "Guedj"

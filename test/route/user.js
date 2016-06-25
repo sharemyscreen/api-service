@@ -191,7 +191,7 @@ describe('Testing user routes /v1/user/*', function () {
   describe('Testing user search (GET /v1/user/search/:partial_email', function () {
     it('Should reply research result', function (done) {
       apiSrv
-        .get('/v1/user/search/u')
+        .get('/v1/user/search/z')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)

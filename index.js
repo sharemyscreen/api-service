@@ -7,6 +7,7 @@ const bearerAuth = require('./auth/bearer');
 const httpHelper = require('sharemyscreen-http-helper');
 
 const user = require('./route/user');
+const organization = require('./route/organization/index');
 
 var apiApp = null;
 var apiRouter = null;
@@ -24,6 +25,7 @@ function getApp () {
 
   // Register all routes
   user.registerRoute(apiRouter);
+  organization.registerRoute(apiRouter);
 
   apiApp.use('/v1', apiRouter);
   apiApp.use('/doc', express.static(path.join(__dirname, '/doc'), {dotfiles: 'allow'}));
