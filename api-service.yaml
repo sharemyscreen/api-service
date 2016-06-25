@@ -106,6 +106,87 @@ api:
                     200:
                       description: Search result
                       type: User Array
+    -
+      Organization:
+        text: Organization related requests
+        url:
+          -
+            /v1/organization:
+              get:
+                summary: Get user organizations
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: User's organizations
+                      type: Organization Array
+              post:
+                summary: Create an organization
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    name:
+                      description: Organization name
+                      in: body
+                      required: true
+                      type: string
+                responses:
+                  -
+                    201:
+                      description: Creation success
+                      type: Organization
+                errors:
+                  - Invalid request
+          -
+            /v1/organization/{public-id}:
+              get:
+                summary: Get organization information
+                description: For security, the "members" fields of organization is not present in the response
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Organization information
+                      type: Organization
+                errors:
+                  - Organization not found
+              patch:
+                summary: Update organization name
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    name:
+                      description: New organization name
+                      type: string
+                      in: body
+                      required: true
+                responses:
+                  -
+                    200:
+                      description: Name updated
+                      type: Organization
+                errors:
+                  - Invalid request
+                  - Organization not found
+                  - Unauthorized update
+              delete:
+                summary: Delete the organization
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Organization deleted
+                      type: string
+                errors:
+                  - Invalid request
+                  - Organization not found
+                  - Unauthorized update
+
 
   errors:
     -
@@ -122,12 +203,25 @@ api:
         message: You cannot update email with a external api registration
         fix: You can't update the email of an user registred with an external api
     -
+      Unauthorized update:
+        status: 401
+        code: 3
+        subcode: 1
+        message: Only organization owner can perform this action
+    -
       User not found:
         status: 404
         code: 2
         subcode: 1
         message: Unable to find user
         fix: Check user publicId twice
+    -
+      Organization not found:
+        status: 404
+        code: 3
+        subcode: 1
+        message: Unable to find organization
+        fix: Check organization publicId twice
 
   objects:
     -
@@ -145,9 +239,10 @@ api:
           email: ""
           first_name: ""
           last_name: ""
+          created_at: ""
           organization:
             -
-              array
+              organization
     -
       User Array:
         description: Array of User object
@@ -157,6 +252,26 @@ api:
             email: ""
             first_name: ""
             last_name: ""
+            created_at: ""
             organization:
               -
                 array
+    -
+      Organization:
+        description: Organization object
+        obj:
+          -
+            name: ""
+            publicId: ""
+            created_at: ""
+            owner: user (without organization)
+            creator: user (without organization)
+            members:
+              -
+                user (without organization)
+    -
+      Organization array:
+        description: Organization array object
+        obj:
+          -
+            Organization
