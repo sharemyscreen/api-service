@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>ShareMyScreen API service</title>
+        <link rel="stylesheet" type="text/css"
+        href="./css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="./css/uber-font.css">
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/doc.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                setTimeout(loadVersionListRoot, 500);
+            });
+        </script>
+    </head>
+    
+    <body>
+        <header class="header">
+            <div class="container">
+                <div>
+                    <h4>ShareMyScreen API service</h4>
+                </div>
+            </div>
+        </header>
+        <div class="container page-layout">
+            <div class="page_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="doc-content">
+                            <div class="part">
+                                <h1>ShareMyScreen API service</h1>
+                                <hr>
+                                <div class="paragraph-header">
+                                    <p>The api service of ShareMyScreen, allows user (througt registred client)
+                                        to interact and use the ShareMyScreen service. To access resources from
+                                        the api service, the <em>OAuth2 Authorization Framework</em> as been implemented.
+                                        For more information, check the <a href="https://tools.ietf.org/html/rfc6749">RFC 6749</a>.
+                                        <br/>The login service is available here : <a href="http://login.sharemyscreen.fr:3000">login.sharemyscreen.fr:3000</a> and
+                                        its documentation <a href="http://login.sharemyscreen.fr:3000/doc">here</a>
+                                        <br/>The api service is available here : <a href="http://api.sharemyscreen.fr:3000">api.sharemyscreen.fr:3000</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="part">
+                                <h1>Versions list</h1>
+                                <hr>
+                                <div id="versions" class="paragraph-header">
+                                    <center>
+                                        <img src="./img/Preloader_21.gif" style="margin-top: 50px">
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

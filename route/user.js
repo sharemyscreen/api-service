@@ -48,6 +48,7 @@ function deleteUser (req, res, next) {
     if (err) {
       next(err);
     } else {
+      // TODO delete user tokens
       httpHelper.sendReply(res, 200, {}, next);
     }
   });
