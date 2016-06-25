@@ -8,7 +8,7 @@ test:
     dbName: sms-api-test
 
   server:
-    url: http://login.sharemyscreen.local
+    url: http://api.sharemyscreen.local
     port: 3000
 
 server:

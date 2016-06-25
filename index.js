@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const bearerAuth = require('./auth/bearer');
 const httpHelper = require('sharemyscreen-http-helper');
 
+const user = require('./route/user');
+
 var apiApp = null;
 var apiRouter = null;
 
@@ -18,8 +20,10 @@ function getApp () {
   apiRouter = express.Router();
 
   bearerAuth.init();
+  apiRouter.use(passport.authenticate('bearer', { session: false }));
 
   // Register all routes
+  user.registerRoute(apiRouter);
 
   apiApp.use('/v1', apiRouter);
   apiApp.use('/doc', express.static(path.join(__dirname, '/doc'), {dotfiles: 'allow'}));
