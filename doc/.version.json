@@ -1,5 +1,13 @@
 [
   {
+    "version": "1.2.0",
+    "author": "guedj_m",
+    "date": "Sun Jun 26 2016 20:22:21 GMT+0200 (CEST)",
+    "changes": [
+      "Add organization managment route"
+    ]
+  },
+  {
     "version": "1.1.0",
     "author": "guedj_m",
     "date": "Sun Jun 26 2016 12:14:58 GMT+0200 (CEST)",

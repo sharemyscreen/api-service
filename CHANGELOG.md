@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+* Add organization managment route
+
+*guedj_m, Sun Jun 26 2016 20:22:21 GMT+0200 (CEST)*
+
+---
 ## 1.1.0
 
 * Add some organization routes
