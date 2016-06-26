@@ -1,5 +1,6 @@
-const httpHelper = require('sharemyscreen-http-helper');
 const common = require('sharemyscreen-common');
+const httpHelper = require('sharemyscreen-http-helper');
+const organizationMember = require('./member');
 
 function registerRoute (router) {
   router.post('/organization', createOrganization);
@@ -8,6 +9,8 @@ function registerRoute (router) {
   router.get('/organization/:id', getOrganizationInformation);
   router.patch('/organization/:id', updateOrganization);
   router.delete('/organization/:id', deleteOrganization);
+
+  organizationMember.registerRoute(router);
 }
 
 function getUserOrganization (req, res, next) {
@@ -62,7 +65,7 @@ function updateOrganization (req, res, next) {
       } else if (fOrg == null) {
         httpHelper.sendReply(res, httpHelper.error.organizationNotFound());
       } else if (fOrg.owner.publicId !== req.user.publicId) {
-        httpHelper.sendReply(res, httpHelper.error.unauthorizedUpdate());
+        httpHelper.sendReply(res, httpHelper.error.unauthorizedOrganizationAction());
       } else {
         fOrg.name = req.body.name;
         fOrg.save(function (err) {
@@ -84,7 +87,7 @@ function deleteOrganization (req, res, next) {
     } else if (fOrg == null) {
       httpHelper.sendReply(res, httpHelper.error.organizationNotFound());
     } else if (fOrg.owner.publicId !== req.user.publicId) {
-      httpHelper.sendReply(res, httpHelper.error.unauthorizedUpdate());
+      httpHelper.sendReply(res, httpHelper.error.unauthorizedOrganizationAction());
     } else {
       fOrg.destroy(function (err) {
         if (err) {

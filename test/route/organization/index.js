@@ -12,6 +12,7 @@ var org;
 
 describe('Testing organization routes /v1/organization/*', function () {
   before(function (done) {
+    this.timeout(4000);
     common.clientModel.createFix(fixture.client.name, fixture.client.key, fixture.client.secret, function (err, cClient) {
       if (err) {
         done(err);
