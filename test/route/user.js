@@ -10,7 +10,7 @@ const apiSrv = supertest(url);
 var user1;
 var user2;
 
-describe('Testing user routes /v1/user/*', function () {
+describe('Testing user routes /v1/users/*', function () {
   before(function (done) {
     common.clientModel.createFix(fixture.client.name, fixture.client.key, fixture.client.secret, function (err, cClient) {
       if (err) {
@@ -53,10 +53,10 @@ describe('Testing user routes /v1/user/*', function () {
     });
   });
 
-  describe('Testing get user information (GET /v1/user/:id)', function () {
+  describe('Testing get user information (GET /v1/users/:id)', function () {
     it('Should reply current user information (/me)', function (done) {
       apiSrv
-        .get('/v1/user/me')
+        .get('/v1/users/me')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
@@ -75,7 +75,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply user2 information', function (done) {
       apiSrv
-        .get('/v1/user/' + user2.publicId)
+        .get('/v1/users/' + user2.publicId)
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
@@ -94,7 +94,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply userNotFound when bad id', function (done) {
       apiSrv
-        .get('/v1/user/toto')
+        .get('/v1/users/toto')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
@@ -112,7 +112,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply authentication error when missing access token', function (done) {
       apiSrv
-        .get('/v1/user/me')
+        .get('/v1/users/me')
         .set('Content-Type', 'application/json')
         .expect(401)
         .end(function (err, res) {
@@ -127,7 +127,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply authentication error when bad access token', function (done) {
       apiSrv
-        .get('/v1/user/toto')
+        .get('/v1/users/toto')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer Hello')
         .expect(401)
@@ -142,10 +142,10 @@ describe('Testing user routes /v1/user/*', function () {
     });
   });
 
-  describe('Testing update user information (PATCH /v1/user/me)', function () {
+  describe('Testing update user information (PATCH /v1/users/me)', function () {
     it('Should update user information', function (done) {
       apiSrv
-        .patch('/v1/user/me')
+        .patch('/v1/users/me')
         .send({ email: fixture.user1n.email, first_name: fixture.user1n.first_name, last_name: fixture.user1n.last_name })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -170,7 +170,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply error when trying to update email for a facebook account', function (done) {
       apiSrv
-        .patch('/v1/user/me')
+        .patch('/v1/users/me')
         .send({ email: fixture.user1n.email, first_name: fixture.user1n.first_name, last_name: fixture.user1n.last_name })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token2)
@@ -188,10 +188,10 @@ describe('Testing user routes /v1/user/*', function () {
     });
   });
 
-  describe('Testing user search (GET /v1/user/search/:partial_email', function () {
+  describe('Testing user search (GET /v1/users/search/:partial_email', function () {
     it('Should reply research result', function (done) {
       apiSrv
-        .get('/v1/user/search/z')
+        .get('/v1/users/search/z')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
@@ -207,7 +207,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply research result', function (done) {
       apiSrv
-        .get('/v1/user/search/' + fixture.user1n.email)
+        .get('/v1/users/search/' + fixture.user1n.email)
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
@@ -223,7 +223,7 @@ describe('Testing user routes /v1/user/*', function () {
 
     it('Should reply research result', function (done) {
       apiSrv
-        .get('/v1/user/search/toto')
+        .get('/v1/users/search/toto')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
@@ -238,10 +238,10 @@ describe('Testing user routes /v1/user/*', function () {
     });
   });
 
-  describe('Testing user deletion (DELETE /v1/user/me)', function () {
+  describe('Testing user deletion (DELETE /v1/users/me)', function () {
     it('Should delete the authenticated user', function (done) {
       apiSrv
-        .delete('/v1/user/me')
+        .delete('/v1/users/me')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)

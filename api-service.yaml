@@ -41,7 +41,7 @@ api:
           User related requests
         url:
           -
-            /v1/user/{publicId}:
+            /v1/users/{publicId}:
               get:
                 summary: Get user information.
                 description: If {publicId} is equal to 'me', return the current user information.
@@ -96,7 +96,7 @@ api:
                       description: User deleted
                       type: string
           -
-            /v1/user/search/{partial_email}:
+            /v1/users/search/{partial_email}:
               get:
                 summary: Search for users by email (partial)
                 tags:
@@ -111,7 +111,7 @@ api:
         text: Organization related requests
         url:
           -
-            /v1/organization:
+            /v1/organizations:
               get:
                 summary: Get user organizations
                 tags:
@@ -140,7 +140,7 @@ api:
                 errors:
                   - Invalid request
           -
-            /v1/organization/{public-id}:
+            /v1/organizations/{public-id}:
               get:
                 summary: Get organization information
                 description: For security, the "members" fields of organization is not present in the response
@@ -187,7 +187,7 @@ api:
                   - Organization not found
                   - Unauthorized organization action
           -
-            /v1/organization/{public-id}/members:
+            /v1/organizations/{public-id}/members:
               get:
                 summary: Get organization members
                 tags:

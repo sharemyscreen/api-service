@@ -2,11 +2,11 @@ const httpHelper = require('sharemyscreen-http-helper');
 const common = require('sharemyscreen-common');
 
 function registerRoute (router) {
-  router.get('/user/:id', getUserInfo);
-  router.patch('/user/me', updateUser);
-  router.delete('/user/me', deleteUser);
+  router.get('/users/:id', getUserInfo);
+  router.patch('/users/me', updateUser);
+  router.delete('/users/me', deleteUser);
 
-  router.get('/user/search/:email', searchUser);
+  router.get('/users/search/:email', searchUser);
 }
 
 function getUserInfo (req, res, next) {

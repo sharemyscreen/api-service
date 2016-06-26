@@ -3,12 +3,12 @@ const httpHelper = require('sharemyscreen-http-helper');
 const organizationMember = require('./member');
 
 function registerRoute (router) {
-  router.post('/organization', createOrganization);
-  router.get('/organization', getUserOrganization);
+  router.post('/organizations', createOrganization);
+  router.get('/organizations', getUserOrganization);
 
-  router.get('/organization/:id', getOrganizationInformation);
-  router.patch('/organization/:id', updateOrganization);
-  router.delete('/organization/:id', deleteOrganization);
+  router.get('/organizations/:id', getOrganizationInformation);
+  router.patch('/organizations/:id', updateOrganization);
+  router.delete('/organizations/:id', deleteOrganization);
 
   organizationMember.registerRoute(router);
 }

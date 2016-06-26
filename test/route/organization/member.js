@@ -11,7 +11,7 @@ var user1;
 var user2;
 var org;
 
-describe('Testing organization routes /v1/organization/{public-id}/member', function () {
+describe('Testing organization routes /v1/organizations/{public-id}/member', function () {
   before(function (done) {
     common.clientModel.createFix(fixture.client.name, fixture.client.key, fixture.client.secret, function (err, cClient) {
       if (err) {
@@ -55,10 +55,10 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
     });
   });
 
-  describe('Testing get organization members (GET /v1/organization/{public-id}/members)', function () {
+  describe('Testing get organization members (GET /v1/organizations/{public-id}/members)', function () {
     it('Should display organization members', function (done) {
       apiSrv
-        .get('/v1/organization/' + org.publicId + '/members')
+        .get('/v1/organizations/' + org.publicId + '/members')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
         .end(function (err, res) {
@@ -74,7 +74,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if bad organization id', function (done) {
       apiSrv
-        .get('/v1/organization/bad/members')
+        .get('/v1/organizations/bad/members')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
         .end(function (err, res) {
@@ -91,7 +91,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is not member of the organization', function (done) {
       apiSrv
-        .get('/v1/organization/' + org.publicId + '/members')
+        .get('/v1/organizations/' + org.publicId + '/members')
         .set('Authorization', 'Bearer ' + fixture.token2)
         .expect(401)
         .end(function (err, res) {
@@ -107,10 +107,10 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
     });
   });
 
-  describe('Testing invite user to organization (POST /v1/organization/{public-id}/members', function () {
+  describe('Testing invite user to organization (POST /v1/organizations/{public-id}/members', function () {
     it('Should invite user to organization', function (done) {
       apiSrv
-        .post('/v1/organization/' + org.publicId + '/members')
+        .post('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -129,7 +129,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if no user_id supplied', function (done) {
       apiSrv
-        .post('/v1/organization/' + org.publicId + '/members')
+        .post('/v1/organizations/' + org.publicId + '/members')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
@@ -146,7 +146,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if bad organization id', function (done) {
       apiSrv
-        .post('/v1/organization/bad/members')
+        .post('/v1/organizations/bad/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -165,7 +165,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is not the owner of the organization', function (done) {
       apiSrv
-        .post('/v1/organization/' + org.publicId + '/members')
+        .post('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token2)
@@ -184,7 +184,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if bad user_id supplied', function (done) {
       apiSrv
-        .post('/v1/organization/' + org.publicId + '/members')
+        .post('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: 'badId' })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -203,7 +203,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is already member of the organization', function (done) {
       apiSrv
-        .post('/v1/organization/' + org.publicId + '/members')
+        .post('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -221,10 +221,10 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
     });
   });
 
-  describe('Testing kick user from organization (DELETE /v1/organization/{public-id}/members', function () {
+  describe('Testing kick user from organization (DELETE /v1/organizations/{public-id}/members', function () {
     it('Should kick user from organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -242,7 +242,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if no user_id supplied', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
@@ -259,7 +259,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if bad organization id', function (done) {
       apiSrv
-        .delete('/v1/organization/bad/members')
+        .delete('/v1/organizations/bad/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -278,7 +278,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is not the owner of the organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token2)
@@ -297,7 +297,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if bad user_id supplied', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: 'bad' })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -316,7 +316,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is not member of the organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -335,7 +335,7 @@ describe('Testing organization routes /v1/organization/{public-id}/member', func
 
     it('Should reply an error if user is the owner of the organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members')
         .send({ user_id: user1.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)

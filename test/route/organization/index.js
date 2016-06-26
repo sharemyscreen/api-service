@@ -10,7 +10,7 @@ const apiSrv = supertest(url);
 var user1;
 var org;
 
-describe('Testing organization routes /v1/organization/*', function () {
+describe('Testing organization routes /v1/organizations/*', function () {
   before(function (done) {
     this.timeout(4000);
     common.clientModel.createFix(fixture.client.name, fixture.client.key, fixture.client.secret, function (err, cClient) {
@@ -47,10 +47,10 @@ describe('Testing organization routes /v1/organization/*', function () {
     });
   });
 
-  describe('Testing organization creation (POST /v1/organization)', function () {
+  describe('Testing organization creation (POST /v1/organizations)', function () {
     it('Should create a new organization', function (done) {
       apiSrv
-        .post('/v1/organization')
+        .post('/v1/organizations')
         .send({name: fixture.org})
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -81,7 +81,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply an error if no name supplied', function (done) {
       apiSrv
-        .post('/v1/organization')
+        .post('/v1/organizations')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
@@ -97,10 +97,10 @@ describe('Testing organization routes /v1/organization/*', function () {
     });
   });
 
-  describe('Testing get user organization information (GET /v1/organization)', function () {
+  describe('Testing get user organization information (GET /v1/organizations)', function () {
     it('Should reply user organizations information', function (done) {
       apiSrv
-        .get('/v1/organization')
+        .get('/v1/organizations')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
         .end(function (err, res) {
@@ -119,10 +119,10 @@ describe('Testing organization routes /v1/organization/*', function () {
     });
   });
 
-  describe('Testing get organization information (GET /v1/organization/{public-id}', function () {
+  describe('Testing get organization information (GET /v1/organizations/{public-id}', function () {
     it('Should reply the organization information', function (done) {
       apiSrv
-        .get('/v1/organization/' + org.public_id)
+        .get('/v1/organizations/' + org.public_id)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
         .end(function (err, res) {
@@ -140,7 +140,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply organization not found if bad public Id', function (done) {
       apiSrv
-        .get('/v1/organization/toto')
+        .get('/v1/organizations/toto')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
         .end(function (err, res) {
@@ -156,10 +156,10 @@ describe('Testing organization routes /v1/organization/*', function () {
     });
   });
 
-  describe('Testing update organization name (PATCH /v1/organization/{public-id})', function () {
+  describe('Testing update organization name (PATCH /v1/organizations/{public-id})', function () {
     it('Should update organization name', function (done) {
       apiSrv
-        .patch('/v1/organization/' + org.public_id)
+        .patch('/v1/organizations/' + org.public_id)
         .send({name: fixture.nOrg})
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -180,7 +180,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply an error when no name supplied', function (done) {
       apiSrv
-        .patch('/v1/organization/' + org.public_id)
+        .patch('/v1/organizations/' + org.public_id)
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
@@ -197,7 +197,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply an error when user not the owner of the organization', function (done) {
       apiSrv
-        .patch('/v1/organization/' + org.public_id)
+        .patch('/v1/organizations/' + org.public_id)
         .send({name: fixture.nOrg})
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token2)
@@ -216,7 +216,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply an error when bad publicId', function (done) {
       apiSrv
-        .patch('/v1/organization/toto')
+        .patch('/v1/organizations/toto')
         .send({name: fixture.nOrg})
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token1)
@@ -234,10 +234,10 @@ describe('Testing organization routes /v1/organization/*', function () {
     });
   });
 
-  describe('Testing organization deletion (DELETE /v1/organization/{public-id}', function () {
+  describe('Testing organization deletion (DELETE /v1/organizations/{public-id}', function () {
     it('Should reply an error when user not the owner of the organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.public_id)
+        .delete('/v1/organizations/' + org.public_id)
         .set('Authorization', 'Bearer ' + fixture.token2)
         .expect(401)
         .end(function (err, res) {
@@ -254,7 +254,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should delete the organization', function (done) {
       apiSrv
-        .delete('/v1/organization/' + org.public_id)
+        .delete('/v1/organizations/' + org.public_id)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
         .end(function (err, res) {
@@ -282,7 +282,7 @@ describe('Testing organization routes /v1/organization/*', function () {
 
     it('Should reply an error when bad publicId', function (done) {
       apiSrv
-        .delete('/v1/organization/toto')
+        .delete('/v1/organizations/toto')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
         .end(function (err, res) {

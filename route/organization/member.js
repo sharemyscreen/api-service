@@ -2,9 +2,9 @@ const common = require('sharemyscreen-common');
 const httpHelper = require('sharemyscreen-http-helper');
 
 function registerRoute (router) {
-  router.get('/organization/:id/members', getMembers);
-  router.post('/organization/:id/members', inviteUser);
-  router.delete('/organization/:id/members', kickUser);
+  router.get('/organizations/:id/members', getMembers);
+  router.post('/organizations/:id/members', inviteUser);
+  router.delete('/organizations/:id/members', kickUser);
 }
 
 function getMembers (req, res, next) {
