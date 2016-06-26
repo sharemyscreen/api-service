@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1
+
+* Update user routes from /v1/user/.. to /v1/users/..
+* Update organization routes from /v1/organization/.. to /v1/organizations/..
+
+*guedj_m, Sun Jun 26 2016 20:38:04 GMT+0200 (CEST)*
+
+---
 ## 1.2.0
 
 * Add organization managment route

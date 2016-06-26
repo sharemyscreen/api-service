@@ -1,5 +1,14 @@
 [
   {
+    "version": "1.2.1",
+    "author": "guedj_m",
+    "date": "Sun Jun 26 2016 20:38:04 GMT+0200 (CEST)",
+    "changes": [
+      "Update user routes from /v1/user/.. to /v1/users/..",
+      "Update organization routes from /v1/organization/.. to /v1/organizations/.."
+    ]
+  },
+  {
     "version": "1.2.0",
     "author": "guedj_m",
     "date": "Sun Jun 26 2016 20:22:21 GMT+0200 (CEST)",
