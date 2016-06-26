@@ -8,7 +8,6 @@ const url = config.get('test.server.url') + ':' + config.get('test.server.port')
 const apiSrv = supertest(url);
 
 var user1;
-var user2;
 var org;
 
 describe('Testing organization routes /v1/organization/*', function () {
@@ -34,7 +33,6 @@ describe('Testing organization routes /v1/organization/*', function () {
                         done(err);
                       } else {
                         user1 = cUser1;
-                        user2 = cUser2;
                         done();
                       }
                     });
@@ -66,7 +64,7 @@ describe('Testing organization routes /v1/organization/*', function () {
             expect(res.body.creator.public_id).to.equal(user1.publicId);
             expect(res.body.members).to.have.lengthOf(1);
             expect(res.body.members[0].public_id).to.equal(user1.publicId);
-            common.userModel.getByPublicId(user1.publicId, function (err, fUser) {
+            common.userModel.getByPublicId(user1.publicId, false, function (err, fUser) {
               if (err) {
                 done(err);
               } else {
@@ -267,7 +265,7 @@ describe('Testing organization routes /v1/organization/*', function () {
                 done(err);
               } else {
                 expect(fOrg).to.be.null;
-                common.userModel.getByPublicId(user1.publicId, function (err, fUser) {
+                common.userModel.getByPublicId(user1.publicId, false, function (err, fUser) {
                   if (err) {
                     done(err);
                   } else {

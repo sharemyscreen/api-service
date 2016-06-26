@@ -11,18 +11,17 @@ function registerRoute (router) {
 
 function getUserInfo (req, res, next) {
   if (req.params.id === 'me') {
-    httpHelper.sendReply(res, 200, req.user.safePrint(), next);
-  } else {
-    common.userModel.getByPublicId(req.params.id, function (err, fUser) {
-      if (err) {
-        next(err);
-      } else if (fUser == null) {
-        httpHelper.sendReply(res, httpHelper.error.userNotFound());
-      } else {
-        httpHelper.sendReply(res, 200, fUser.safePrint(), next);
-      }
-    });
+    req.params.id = req.user.publicId;
   }
+  common.userModel.getByPublicId(req.params.id, true, function (err, fUser) {
+    if (err) {
+      next(err);
+    } else if (fUser == null) {
+      httpHelper.sendReply(res, httpHelper.error.userNotFound());
+    } else {
+      httpHelper.sendReply(res, 200, fUser.safePrint(), next);
+    }
+  });
 }
 
 function updateUser (req, res, next) {

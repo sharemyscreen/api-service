@@ -154,7 +154,7 @@ describe('Testing user routes /v1/user/*', function () {
           if (err) {
             done(err);
           } else {
-            common.userModel.getByPublicId(user1.publicId, function (err, fUser) {
+            common.userModel.getByPublicId(user1.publicId, false, function (err, fUser) {
               if (err) {
                 done(err);
               } else {
@@ -249,7 +249,7 @@ describe('Testing user routes /v1/user/*', function () {
           if (err) {
             done(err);
           } else {
-            common.userModel.getByPublicId(user1.publicId, function (err, fUser) {
+            common.userModel.getByPublicId(user1.publicId, false, function (err, fUser) {
               if (err) {
                 done(err);
               } else {
