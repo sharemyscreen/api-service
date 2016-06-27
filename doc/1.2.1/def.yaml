@@ -321,7 +321,7 @@ api:
           first_name: ""
           last_name: ""
           created_at: ""
-          organization:
+          organizations:
             -
               Organization
     -
@@ -334,7 +334,7 @@ api:
             first_name: ""
             last_name: ""
             created_at: ""
-            organization:
+            organizations:
               -
                 Organization
     -
@@ -362,10 +362,10 @@ api:
         obj:
           -
             name: ""
-            publicId: ""
+            public_id: ""
             created_at: ""
-            owner: user (without organization)
-            creator: user (without organization)
+            owner: Member
+            creator: Member
             members:
               -
                 Member
