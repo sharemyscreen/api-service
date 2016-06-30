@@ -15,18 +15,22 @@ function registerRoute (router) {
 
 function getUserOrganization (req, res, next) {
   var reply = [];
-  req.user.organizations.forEach(function (organization, i) {
-    common.organizationModel.getByIdDepth(organization, function (err, fOrg) {
-      if (err) {
-        next(err);
-      } else {
-        reply.push(fOrg.safePrint(true));
-        if (i === req.user.organizations.length - 1) {
-          httpHelper.sendReply(res, 200, reply, next);
+  if (req.user.organizations.length > 0) {
+    req.user.organizations.forEach(function (organization, i) {
+      common.organizationModel.getByIdDepth(organization, function (err, fOrg) {
+        if (err) {
+          next(err);
+        } else {
+          reply.push(fOrg.safePrint(true));
+          if (i === req.user.organizations.length - 1) {
+            httpHelper.sendReply(res, 200, reply, next);
+          }
         }
-      }
+      });
     });
-  });
+  } else {
+    httpHelper.sendReply(res, 200, reply, next);
+  }
 }
 
 function getOrganizationInformation (req, res, next) {
