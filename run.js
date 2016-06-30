@@ -12,7 +12,7 @@ mongoose.connection.on('error', function (err) {
 mongoose.connection.on('open', function () {
   logger.info('Connection success !');
 
-  const app = apiApp.getApp();
+  const app = apiApp.getApp(false);
   app.listen(config.get('server.port'), function () {
     logger.info('Server started on port ' + config.get('server.port'));
   });

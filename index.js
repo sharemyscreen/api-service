@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const logger = require('winston');
-const expressWinston = require('express-winston');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const bearerAuth = require('./auth/bearer');
@@ -13,7 +12,7 @@ const organization = require('./route/organization/index');
 var apiApp = null;
 var apiRouter = null;
 
-function getApp () {
+function getApp (log) {
   logger.info('Initializing api app ...');
   apiApp = express();
   apiApp.use(bodyParser.json());
@@ -31,16 +30,9 @@ function getApp () {
     next();
   });
 
-  apiApp.use(expressWinston.logger({
-    transports: [
-      new logger.transports.Console({
-        colorize: true
-      })
-    ],
-    expressFormat: true,
-    colorStatus: true,
-    requestWhitelist: ['url', 'headers']
-  }));
+  if (log) {
+    apiApp.use(httpHelper.requestLogger('api'));
+  }
 
   // Register all routes
   user.registerRoute(apiRouter);
