@@ -71,7 +71,7 @@ function searchUser (req, res, next) {
     } else {
       var reply = [];
       fUsers.forEach(function (user) {
-        reply.push(user.safePrint());
+        reply.push(user.safePrintMember());
       });
       httpHelper.sendReply(res, 200, reply, next);
     }
