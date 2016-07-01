@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2
+
+* Update kick user route DELETE /v1/organization/{org-id}/members/{user-id}
+
+*guedj_m, Fri Jul 01 2016 10:28:10 GMT+0200 (CEST)*
+
+---
 ## 1.2.1
 
 * Update user routes from /v1/user/.. to /v1/users/..

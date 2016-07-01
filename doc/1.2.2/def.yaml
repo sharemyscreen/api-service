@@ -1,0 +1,371 @@
+api:
+  name: ShareMyScreen API service
+  description: |
+    The api service of ShareMyScreen, allows user (througt registred client) to interact and use the ShareMyScreen service.
+    To access resources from the api service, the *OAuth2 Authorization Framework* as been implemented. For more information, check the {{RFC 6749!https://tools.ietf.org/html/rfc6749}}.;;;
+    The login service is available here : {{login.sharemyscreen.fr:3000!http://login.sharemyscreen.fr:3000}} and its documentation {{here!http://login.sharemyscreen.fr:3000/doc}};;;
+    The api service is available here : {{api.sharemyscreen.fr:3000!http://api.sharemyscreen.fr:3000}}
+
+  paragraphs:
+    -
+      Information:
+        text: |
+          The api service of ShareMyScreen, allows user (througt registred client) to interact and use the ShareMyScreen service.
+          To access resources from the api service, the *OAuth2 Authorization Framework* as been implemented. For more information, check the {{RFC 6749!https://tools.ietf.org/html/rfc6749}}.;;;
+    -
+      Authorization:
+        text: |
+          All requests sent to the api service MUST be authorized with an *Access token* (of type bearer).;;;
+          The steps to obtain an access token are explained in the {{login service documentation!http://login.sharemyscreen.fr:3000/doc}};;;
+          Once you get your access token, you will need to include it in the **HTTP Header** of the requests:;;;
+          ```
+          Authorization: Bearer <access_token>
+          ```
+          If a request is unauthenticated, the server will reply a status code **403** with a body **Unauthorized**.
+    -
+      Request and Reply format:
+        text: |
+          All requests must be **HTTP** request.;;;
+          Request body must be **JSON** formated.;;;
+          Reply are **JSON** formated object in **snake_case**.
+
+  tags:
+    -
+      Bearer Auth:
+        link: paragraph-authorization
+
+  routes:
+    -
+      User:
+        text: |
+          User related requests
+        url:
+          -
+            /v1/users/{publicId}:
+              get:
+                summary: Get user information.
+                description: If {publicId} is equal to 'me', return the current user information.
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Ok
+                      type: User
+                errors:
+                  - User not found
+              patch:
+                summary: Update user information.
+                description: /!\ {publicId} MUST be set to 'me' or reply will be a 404 not found
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    email:
+                      description: The new user email
+                      required: false
+                      in: body
+                      type: string
+                  -
+                    first_name:
+                      description: The new user first name
+                      required: false
+                      in: body
+                      type: string
+                  -
+                    last_name:
+                      description: The new user last name
+                      required: false
+                      in: body
+                      type: string
+                responses:
+                  -
+                    200:
+                      description: Update success
+                      type: User
+                errors:
+                  - Invalid update
+              delete:
+                summary: Delete the user
+                description: /!\ {publicId} MUST be set to 'me' or reply will be a 404 not found
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: User deleted
+                      type: string
+          -
+            /v1/users/search/{partial_email}:
+              get:
+                summary: Search for users by email (partial)
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Search result
+                      type: User Array
+    -
+      Organization:
+        text: Organization related requests
+        url:
+          -
+            /v1/organizations:
+              get:
+                summary: Get user organizations
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: User's organizations
+                      type: Organization Array
+              post:
+                summary: Create an organization
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    name:
+                      description: Organization name
+                      in: body
+                      required: true
+                      type: string
+                responses:
+                  -
+                    201:
+                      description: Creation success
+                      type: Organization
+                errors:
+                  - Invalid request
+          -
+            /v1/organizations/{public-id}:
+              get:
+                summary: Get organization information
+                description: For security, the "members" fields of organization is not present in the response
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Organization information
+                      type: Organization
+                errors:
+                  - Organization not found
+              patch:
+                summary: Update organization name
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    name:
+                      description: New organization name
+                      type: string
+                      in: body
+                      required: true
+                responses:
+                  -
+                    200:
+                      description: Name updated
+                      type: Organization
+                errors:
+                  - Invalid request
+                  - Organization not found
+                  - Unauthorized organization action
+              delete:
+                summary: Delete the organization
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Organization deleted
+                      type: string
+                errors:
+                  - Invalid request
+                  - Organization not found
+                  - Unauthorized organization action
+          -
+            /v1/organizations/{public-id}/members:
+              get:
+                summary: Get organization members
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Member list
+                      type: Member array
+                errors:
+                  - Organization not found
+                  - Unauthorized organization display
+              post:
+                summary: Invit user to organization
+                tags:
+                  - Bearer Auth
+                parameters:
+                  -
+                    user_id:
+                      description: User public id
+                      type: string
+                      in: body
+                      required: true
+                responses:
+                  -
+                    201:
+                      description: User added to organization
+                      type: Member array
+                errors:
+                  - Invalid request
+                  - Organization not found
+                  - Unauthorized organization action
+                  - User not found
+                  - User already member
+          -
+            /v1/organizations/{public-id}/members/{user-id}:
+              delete:
+                summary: Remove user from organization
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: User removed
+                      type: Member array
+                errors:
+                  - Organization not found
+                  - Unauthorized organization action
+                  - User not found
+                  - Kick owner error
+                  - User not member
+  errors:
+    -
+      Invalid request:
+        status: 400
+        code: 1
+        message: Invalid request
+        fix: Check the request parameters twice
+    -
+      Invalid update:
+        status: 401
+        code: 4
+        subcode: 1
+        message: You cannot update email with a external api registration
+        fix: You can't update the email of an user registred with an external api
+    -
+      User already member:
+        status: 400
+        code: 3
+        subcode: 1
+        message: User already member of the organization
+    -
+      User not member:
+        status: 400
+        code: 3
+        subcode: 2
+        message: User not member of the organization
+    -
+      Kick Owner Error:
+        status: 400
+        code: 3
+        subcode: 3
+        message: Owner cannot kick himself from organization
+    -
+      Unauthorized organization action:
+        status: 401
+        code: 3
+        subcode: 1
+        message: Only organization owner can perform this action
+    -
+      Unauthorized organization display:
+        status: 401
+        code: 3
+        subcode: 2
+        message: Only organization member can perform this action
+    -
+      User not found:
+        status: 404
+        code: 2
+        subcode: 1
+        message: Unable to find user
+        fix: Check user publicId twice
+    -
+      Organization not found:
+        status: 404
+        code: 3
+        subcode: 1
+        message: Unable to find organization
+        fix: Check organization publicId twice
+
+  objects:
+    -
+      Error:
+        description: Error object (sub_code is facultative)
+        obj:
+          code: 0
+          sub_code: 0
+          message: ""
+    -
+      User:
+        description: User object
+        obj:
+          public_id: ""
+          email: ""
+          first_name: ""
+          last_name: ""
+          created_at: ""
+          organizations:
+            -
+              Organization
+    -
+      User Array:
+        description: Array of User object
+        obj:
+          -
+            public_id: ""
+            email: ""
+            first_name: ""
+            last_name: ""
+            created_at: ""
+            organizations:
+              -
+                Organization
+    -
+      Member:
+        description: A member is an user without organizations
+        obj:
+          public_id: ""
+          email: ""
+          first_name: ""
+          last_name: ""
+          created_at: ""
+    -
+      Member array:
+        description: Member array
+        obj:
+          -
+            public_id: ""
+            email: ""
+            first_name: ""
+            last_name: ""
+            created_at: ""
+    -
+      Organization:
+        description: Organization object
+        obj:
+          -
+            name: ""
+            public_id: ""
+            created_at: ""
+            owner: Member
+            creator: Member
+            members:
+              -
+                Member
+    -
+      Organization array:
+        description: Organization array object
+        obj:
+          -
+            Organization

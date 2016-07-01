@@ -1,5 +1,13 @@
 [
   {
+    "version": "1.2.2",
+    "author": "guedj_m",
+    "date": "Fri Jul 01 2016 10:28:10 GMT+0200 (CEST)",
+    "changes": [
+      "Update kick user route DELETE /v1/organization/{org-id}/members/{user-id}"
+    ]
+  },
+  {
     "version": "1.2.1",
     "author": "guedj_m",
     "date": "Sun Jun 26 2016 20:38:04 GMT+0200 (CEST)",
