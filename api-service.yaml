@@ -222,24 +222,18 @@ api:
                   - Unauthorized organization action
                   - User not found
                   - User already member
+          -
+            /v1/organizations/{public-id}/members/{user-id}:
               delete:
                 summary: Remove user from organization
                 tags:
                   - Bearer Auth
-                parameters:
-                  -
-                    user_id:
-                      description: User public id
-                      type: string
-                      in: body
-                      required: true
                 responses:
                   -
                     200:
                       description: User removed
                       type: Member array
                 errors:
-                  - Invalid request
                   - Organization not found
                   - Unauthorized organization action
                   - User not found

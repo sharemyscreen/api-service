@@ -221,12 +221,10 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
     });
   });
 
-  describe('Testing kick user from organization (DELETE /v1/organizations/{public-id}/members', function () {
+  describe('Testing kick user from organization (DELETE /v1/organizations/{public-id}/members/{user-id}', function () {
     it('Should kick user from organization', function (done) {
       apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
-        .send({ user_id: user2.publicId })
-        .set('Content-Type', 'application/json')
+        .delete('/v1/organizations/' + org.publicId + '/members/' + user2.publicId)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(200)
         .end(function (err, res) {
@@ -240,28 +238,9 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
         });
     });
 
-    it('Should reply an error if no user_id supplied', function (done) {
-      apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
-        .set('Content-Type', 'application/json')
-        .set('Authorization', 'Bearer ' + fixture.token1)
-        .expect(400)
-        .end(function (err, res) {
-          if (err) {
-            done(err);
-          } else {
-            expect(res.body.code).to.equal(1);
-            expect(res.body.message).to.equal('Invalid request');
-            done();
-          }
-        });
-    });
-
     it('Should reply an error if bad organization id', function (done) {
       apiSrv
-        .delete('/v1/organizations/bad/members')
-        .send({ user_id: user2.publicId })
-        .set('Content-Type', 'application/json')
+        .delete('/v1/organizations/bad/members/' + user2.publicId)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
         .end(function (err, res) {
@@ -278,7 +257,7 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
 
     it('Should reply an error if user is not the owner of the organization', function (done) {
       apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
+        .delete('/v1/organizations/' + org.publicId + '/members/' + user2.publicId)
         .send({ user_id: user2.publicId })
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + fixture.token2)
@@ -297,9 +276,7 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
 
     it('Should reply an error if bad user_id supplied', function (done) {
       apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
-        .send({ user_id: 'bad' })
-        .set('Content-Type', 'application/json')
+        .delete('/v1/organizations/' + org.publicId + '/members/bad')
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(404)
         .end(function (err, res) {
@@ -316,9 +293,7 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
 
     it('Should reply an error if user is not member of the organization', function (done) {
       apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
-        .send({ user_id: user2.publicId })
-        .set('Content-Type', 'application/json')
+        .delete('/v1/organizations/' + org.publicId + '/members/' + user2.publicId)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
         .end(function (err, res) {
@@ -335,9 +310,7 @@ describe('Testing organization routes /v1/organizations/{public-id}/member', fun
 
     it('Should reply an error if user is the owner of the organization', function (done) {
       apiSrv
-        .delete('/v1/organizations/' + org.publicId + '/members')
-        .send({ user_id: user1.publicId })
-        .set('Content-Type', 'application/json')
+        .delete('/v1/organizations/' + org.publicId + '/members/' + user1.publicId)
         .set('Authorization', 'Bearer ' + fixture.token1)
         .expect(400)
         .end(function (err, res) {
