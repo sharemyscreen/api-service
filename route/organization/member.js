@@ -1,10 +1,11 @@
+const passport = require('passport');
 const common = require('sharemyscreen-common');
 const httpHelper = require('sharemyscreen-http-helper');
 
 function registerRoute (router) {
-  router.get('/organizations/:id/members', getMembers);
-  router.post('/organizations/:id/members', inviteUser);
-  router.delete('/organizations/:id/members/:user_id', kickUser);
+  router.get('/organizations/:id/members', passport.authenticate('bearer', { session: false }), getMembers);
+  router.post('/organizations/:id/members', passport.authenticate('bearer', { session: false }), inviteUser);
+  router.delete('/organizations/:id/members/:user_id', passport.authenticate('bearer', { session: false }), kickUser);
 }
 
 function getMembers (req, res, next) {

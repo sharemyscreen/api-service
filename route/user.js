@@ -4,10 +4,10 @@ const passport = require('passport');
 
 function registerRoute (router) {
   router.get('/users/:id', passport.authenticate('bearer', { session: false }), getUserInfo);
-  router.patch('/users/me', updateUser);
-  router.delete('/users/me', deleteUser);
+  router.patch('/users/me', passport.authenticate('bearer', { session: false }), updateUser);
+  router.delete('/users/me', passport.authenticate('bearer', { session: false }), deleteUser);
 
-  router.get('/users/search/:email', searchUser);
+  router.get('/users/search/:email', passport.authenticate('bearer', { session: false }), searchUser);
 }
 
 function getUserInfo (req, res, next) {

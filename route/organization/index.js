@@ -1,14 +1,15 @@
+const passport = require('passport');
 const common = require('sharemyscreen-common');
 const httpHelper = require('sharemyscreen-http-helper');
 const organizationMember = require('./member');
 
 function registerRoute (router) {
-  router.post('/organizations', createOrganization);
-  router.get('/organizations', getUserOrganization);
+  router.post('/organizations', passport.authenticate('bearer', { session: false }), createOrganization);
+  router.get('/organizations', passport.authenticate('bearer', { session: false }), getUserOrganization);
 
-  router.get('/organizations/:id', getOrganizationInformation);
-  router.patch('/organizations/:id', updateOrganization);
-  router.delete('/organizations/:id', deleteOrganization);
+  router.get('/organizations/:id', passport.authenticate('bearer', { session: false }), getOrganizationInformation);
+  router.patch('/organizations/:id', passport.authenticate('bearer', { session: false }), updateOrganization);
+  router.delete('/organizations/:id', passport.authenticate('bearer', { session: false }), deleteOrganization);
 
   organizationMember.registerRoute(router);
 }
