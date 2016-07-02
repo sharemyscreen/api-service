@@ -50,6 +50,7 @@
     "index.js",
     "auth/",
     "doc/",
-    "route/"
+    "route/",
+    "mq/"
   ]
 }
