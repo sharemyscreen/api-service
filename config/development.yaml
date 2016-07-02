@@ -13,3 +13,6 @@ test:
 
 server:
   port: 3000
+
+mqMaster:
+  port: 7777

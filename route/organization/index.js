@@ -1,6 +1,7 @@
 const passport = require('passport');
 const common = require('sharemyscreen-common');
 const httpHelper = require('sharemyscreen-http-helper');
+const mqMaster = require('../../mq/master');
 const organizationMember = require('./member');
 
 function registerRoute (router) {
@@ -54,6 +55,7 @@ function createOrganization (req, res, next) {
       if (err) {
         next(err);
       } else {
+        mqMaster.notifyOrganizationCreation(cOrg.safePrint(false));
         httpHelper.sendReply(res, 201, cOrg.safePrint(true), next);
       }
     });
@@ -98,6 +100,7 @@ function deleteOrganization (req, res, next) {
         if (err) {
           next(err);
         } else {
+          mqMaster.notifyOrganizationDeletion(fOrg.safePrint(false));
           httpHelper.sendReply(res, 200, {}, next);
         }
       });
