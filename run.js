@@ -14,9 +14,6 @@ mongoose.connection.on('open', function () {
 
   const app = apiApp.getApp(false);
 
-  app.mqMaster.bind(config.get('mqMaster.port'));
-  logger.info('MQ master bound on port ' + config.get('mqMaster.port'));
-
   app.listen(config.get('server.port'), function () {
     logger.info('Server started on port ' + config.get('server.port'));
   });
