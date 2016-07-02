@@ -31,9 +31,9 @@
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "api-doc-generator": "git+ssh://git@github.com/guedjm/api-doc-generator.git",
     "chai": "^3.5.0",
     "config": "^1.21.0",
-    "doc-api-gen": "git+ssh://git@github.com/guedjm/APIDocGenerator-api.git",
     "eslint": "^2.13.1",
     "eslint-config-standard": "^5.3.1",
     "eslint-plugin-promise": "^1.3.2",
