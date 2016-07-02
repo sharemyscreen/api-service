@@ -2,6 +2,13 @@
 
 ## 1.2.2
 
+* Added push notification service
+
+*ferrie_j, Sat Jul 02 2016 22:01:14 GMT+0200 (CEST)*
+
+---
+## 1.2.2
+
 * Update kick user route DELETE /v1/organization/{org-id}/members/{user-id}
 
 *guedj_m, Fri Jul 01 2016 10:28:10 GMT+0200 (CEST)*
