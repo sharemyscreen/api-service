@@ -1,8 +1,9 @@
 const httpHelper = require('sharemyscreen-http-helper');
 const common = require('sharemyscreen-common');
+const passport = require('passport');
 
 function registerRoute (router) {
-  router.get('/users/:id', getUserInfo);
+  router.get('/users/:id', passport.authenticate('bearer', { session: false }), getUserInfo);
   router.patch('/users/me', updateUser);
   router.delete('/users/me', deleteUser);
 

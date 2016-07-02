@@ -21,7 +21,6 @@ function getApp (log) {
   apiRouter = express.Router();
 
   bearerAuth.init();
-  apiRouter.use(passport.authenticate('bearer', { session: false }));
 
   apiApp.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
