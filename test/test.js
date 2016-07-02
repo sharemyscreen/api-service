@@ -20,6 +20,10 @@ before(function (done) {
       } else {
         console.log('Database dropped');
         const app = apiApp.getApp();
+
+        app.mqMaster.bind(config.get('mqMaster.port'));
+        console.log('MQ master bound on ' + config.get('mqMaster.port'));
+
         app.listen(config.get('server.port'), function () {
           done();
         });

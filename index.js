@@ -4,6 +4,7 @@ const logger = require('winston');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const bearerAuth = require('./auth/bearer');
+const mqMaster = require('./mq/master');
 const httpHelper = require('sharemyscreen-http-helper');
 
 const user = require('./route/user');
@@ -35,6 +36,8 @@ function getApp () {
     logger.error(err);
     httpHelper.sendReply(res, httpHelper.error.internalServerError(err));
   });
+
+  apiApp.mqMaster = mqMaster;
 
   logger.info('Api app initialized');
 
