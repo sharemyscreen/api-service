@@ -47,7 +47,8 @@ function getApp (log) {
     httpHelper.sendReply(res, httpHelper.error.internalServerError(err));
   });
 
-  apiApp.mqMaster = mqMaster;
+  mqMaster.bind(7777);
+  logger.info('MQ master bound on port 7777');
 
   logger.info('Api app initialized');
 
