@@ -240,7 +240,7 @@ api:
                   - Kick owner error
                   - User not member
           -
-            /v1/organization/{public-id}/rooms:
+            /v1/organizations/{public-id}/rooms:
               get:
                 summary: Get organization rooms
                 tags:
@@ -252,6 +252,21 @@ api:
                       type: Room array
                 errors:
                   - Organization not found
+                  - Unauthorized organization display
+          -
+            /v1/organizations/{public-ic}/rooms/{public-id}:
+              get:
+                summary: Get room information
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Room information
+                      type: Room
+                errors:
+                  - Organization not found
+                  - Room not found
                   - Unauthorized organization display
 
   errors:
@@ -312,6 +327,13 @@ api:
         subcode: 1
         message: Unable to find organization
         fix: Check organization publicId twice
+    -
+      Room not found:
+        status: 404
+        code: 4
+        subcode: 1
+        message: Unable to find room
+        fix: Check room publicId twice
 
   objects:
     -
