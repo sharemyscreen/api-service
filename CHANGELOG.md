@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0
+
+* Add rooms route
+* Add rooms in organization object
+
+*guedj_m, Sun Jul 03 2016 20:55:30 GMT+0200 (CEST)*
+
+---
 ## 1.2.2
 
 * Added push notification service
