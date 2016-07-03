@@ -1,0 +1,22 @@
+{
+  "user1": {
+    "email": "user1@room.com",
+    "password": "password",
+    "first_name": "Maxime",
+    "last_name": "Guedj"
+  },
+  "user2": {
+    "email": "user2@room.com",
+    "password": "password",
+    "first_name": "Maxime",
+    "last_name": "Guedj"
+  },
+  "client": {
+    "name": "Test room",
+    "key": "TestRoomKey",
+    "secret": "TestRoomSecret"
+  },
+  "token1": "TestRoomAccessToken",
+  "token2": "TestRoomAccessToken2",
+  "org": "OrgRoomName"
+}

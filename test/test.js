@@ -21,7 +21,7 @@ before(function (done) {
         console.log('Database dropped');
         const app = apiApp.getApp(true);
 
-        app.mqMaster.bind(config.get('mqMaster.port'));
+        // app.mqMaster.bind(config.get('mqMaster.port'));
         console.log('MQ master bound on ' + config.get('mqMaster.port'));
 
         app.listen(config.get('server.port'), function () {

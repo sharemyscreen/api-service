@@ -3,6 +3,7 @@ const common = require('sharemyscreen-common');
 const httpHelper = require('sharemyscreen-http-helper');
 const mqMaster = require('../../mq/master');
 const organizationMember = require('./member');
+const organizationRoom = require('./room');
 
 function registerRoute (router) {
   router.post('/organizations', passport.authenticate('bearer', { session: false }), createOrganization);
@@ -13,6 +14,7 @@ function registerRoute (router) {
   router.delete('/organizations/:id', passport.authenticate('bearer', { session: false }), deleteOrganization);
 
   organizationMember.registerRoute(router);
+  organizationRoom.registerRoute(router);
 }
 
 function getUserOrganization (req, res, next) {

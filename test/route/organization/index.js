@@ -113,6 +113,10 @@ describe('Testing organization routes /v1/organizations/*', function () {
             expect(res.body[0].creator.public_id).to.equal(user1.publicId);
             expect(res.body[0].members).to.have.lengthOf(1);
             expect(res.body[0].members[0].public_id).to.equal(user1.publicId);
+            expect(res.body[0].rooms).to.have.lengthOf(1);
+            expect(res.body[0].rooms[0].name).to.equal('general');
+            expect(res.body[0].rooms[0].members).to.have.lengthOf(1);
+            expect(res.body[0].rooms[0].members[0].public_id).to.equal(user1.publicId);
             done();
           }
         });

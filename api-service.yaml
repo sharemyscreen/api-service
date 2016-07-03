@@ -239,6 +239,21 @@ api:
                   - User not found
                   - Kick owner error
                   - User not member
+          -
+            /v1/organization/{public-id}/rooms:
+              get:
+                summary: Get organization rooms
+                tags:
+                  - Bearer Auth
+                responses:
+                  -
+                    200:
+                      description: Rooms
+                      type: Room array
+                errors:
+                  - Organization not found
+                  - Unauthorized organization display
+
   errors:
     -
       Invalid request:
@@ -363,9 +378,28 @@ api:
             members:
               -
                 Member
+            rooms:
+              -
+                Room
     -
       Organization array:
         description: Organization array object
         obj:
           -
             Organization
+    -
+      Room:
+        description: Room object
+        obj:
+          name: ""
+          public_id: ""
+          created_at: ""
+          owner: Member
+          creator: Member
+          members: [Member]
+    -
+      Room array:
+        description: Room array object
+        obj:
+          -
+            Room
