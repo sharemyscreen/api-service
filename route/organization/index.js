@@ -57,7 +57,7 @@ function createOrganization (req, res, next) {
       if (err) {
         next(err);
       } else {
-        mqMaster.notifyOrganizationCreation(cOrg.safePrint(false));
+        mqMaster.notifyOrganizationCreation(cOrg);
         httpHelper.sendReply(res, 201, cOrg.safePrint(true), next);
       }
     });
@@ -102,7 +102,7 @@ function deleteOrganization (req, res, next) {
         if (err) {
           next(err);
         } else {
-          mqMaster.notifyOrganizationDeletion(fOrg.safePrint(false));
+          mqMaster.notifyOrganizationDeletion(fOrg);
           httpHelper.sendReply(res, 200, {}, next);
         }
       });
