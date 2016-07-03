@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1
+
+* Add room information route
+
+*guedj_m, Sun Jul 03 2016 22:35:40 GMT+0200 (CEST)*
+
+---
 ## 1.3.0
 
 * Add rooms route
